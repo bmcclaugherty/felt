@@ -168,6 +168,12 @@ def test_surrender_only_when_initial_hand():
     assert advice.action == "hit"
 
 
+def test_eights_vs_ace_split_when_surrender_unavailable():
+    legal = {"hit", "stand", "double", "split"}
+    assert act("8", "8", up="A", legal=legal).action == "split"
+    assert act("8", "8", up="A", legal=legal, initial=False).action == "split"
+
+
 def test_split_aces_advice_is_split():
     assert act("A", "A", up="9").action == "split"
 

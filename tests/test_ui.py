@@ -39,6 +39,15 @@ def test_combine_pads_shorter_block():
     assert rows[1].plain == "    b"
 
 
+def test_combine_aligns_variable_width_blocks():
+    rows = combine([
+        [to_text_line("a"), to_text_line("aaaa")],
+        [to_text_line("bb"), to_text_line("b")],
+    ], gap=1)
+    assert rows[0].plain == "a    bb"
+    assert rows[1].plain == "aaaa b "
+
+
 def to_text_line(s):
     from rich.text import Text
 

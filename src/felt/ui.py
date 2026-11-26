@@ -77,7 +77,7 @@ def combine(blocks: list[list[Text]], gap: int = 2) -> list[Text]:
     """Lay blocks out side by side, top-aligned, padding shorter blocks."""
     if not blocks:
         return []
-    widths = [b[0].cell_len if b else 0 for b in blocks]
+    widths = [max((line.cell_len for line in b), default=0) for b in blocks]
     height = max((len(b) for b in blocks), default=0)
     out: list[Text] = []
     for row in range(height):
@@ -87,6 +87,7 @@ def combine(blocks: list[list[Text]], gap: int = 2) -> list[Text]:
                 line.append(" " * gap)
             if row < len(block):
                 line.append_text(block[row])
+                line.append(" " * (widths[i] - block[row].cell_len))
             else:
                 line.append(" " * widths[i])
         out.append(line)

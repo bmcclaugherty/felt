@@ -419,7 +419,7 @@ class Game:
                     returned = round(hand.bet * (1 + self.rules.blackjack_pays), 2)
             elif dealer_bj:
                 outcome = "lose"
-            elif hand.total > dealer_total:
+            elif dealer_total > 21 or hand.total > dealer_total:
                 outcome = "win"
                 returned = round(hand.bet * 2, 2)
             elif hand.total == dealer_total:

@@ -32,6 +32,16 @@ def settle(game: Game) -> None:
         assert guard < 20
 
 
+def test_live_hand_wins_when_dealer_busts():
+    g = game("10♠", "6♥", "7♦", "10♣", "K♥")
+    g.start_round()
+    g.act("stand")
+    g.acknowledge()
+    assert g.dealer_total == 26
+    assert g.hands[0].outcome == "win"
+    assert g.bankroll == 1025
+
+
 # --- Deal, naturals, peek ----------------------------------------------------
 def test_deal_order_and_bet_deduction():
     g = game("10♠", "9♥", "9♦", "7♣")

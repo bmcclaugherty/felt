@@ -97,9 +97,6 @@ def chart_action(
     idx = _up_index(up_rank)
     pair = _pair_key(cards)
 
-    if initial and surrender_allowed and len(cards) == 2 and not soft:
-        if pair == "8" and up_rank == "A":
-            return "R"
     if initial and surrender_allowed and len(cards) == 2:
         if pair == "8" and up_rank == "A":
             return "R"
@@ -112,6 +109,8 @@ def chart_action(
                 return "R"
 
     if pair is not None and not ignore_pair:
+        if pair == "8" and up_rank == "A":
+            return "P"  # The surrender overlay above applies only when offered.
         return PAIR_CHART[pair][idx]
     if soft:
         return SOFT_CHART.get(min(max(total, 13), 21), "S")[idx]
